@@ -43,22 +43,8 @@ Client = discord.Client | commands.Bot
 _client_log = logging.getLogger("discord.Client")
 
 
+@discord.utils.copy_doc(ui.View)
 class View(ui.View):
-    """Represents a UI view.
-
-    This object must be inherited to create a UI within Discord.
-
-    .. versionadded:: 2.0
-
-    Parameters
-    -----------
-    timeout: Optional[:class:`float`]
-        Timeout in seconds from last interaction with the UI before no longer accepting input.
-        If ``None`` then there is no timeout.
-
-    DOCSTRING WAS TAKEN FROM DISCORD.PY'S MODAL ON 1/19/2023
-    """
-
     async def _interaction_check(self, interaction: discord.Interaction) -> bool:
         if hasattr(interaction.client, "interaction_check"):
             global_check = getattr(interaction.client, "interaction_check")
@@ -87,76 +73,17 @@ class View(ui.View):
             interaction.client.dispatch("view_error", interaction, e, item)
             return await self.on_error(interaction, e, item)
 
+    @discord.utils.copy_doc(ui.View.on_error)
     async def on_error(
         self, interaction: Interaction, error: Exception, item: Item[Any], /
     ) -> None:
-        """|coro|
-
-        A callback that is called when an item's callback or :meth:`interaction_check`
-        fails with an error.
-
-        The default implementation logs to the library logger.
-
-        Parameters
-        -----------
-        interaction: :class:`~discord.Interaction`
-            The interaction that led to the failure.
-        error: :class:`Exception`
-            The exception that was raised.
-        item: :class:`Item`
-            The item that failed the dispatch.
-
-        DOCSTRING WAS TAKEN FROM DISCORD.PY'S MODAL ON 1/19/2023
-        """
-
         _client_log.error(
             "Ignoring exception in view %r for item %r", self, item, exc_info=error
         )
 
 
+@discord.utils.copy_doc(ui.Modal)
 class Modal(ui.Modal):
-    """Represents a UI modal.
-
-    This object must be inherited to create a modal popup window within discord.
-
-    .. versionadded:: 2.0
-
-    Examples
-    ----------
-
-    .. code-block:: python3
-
-        from discord import ui
-
-        class Questionnaire(ui.Modal, title='Questionnaire Response'):
-            name = ui.TextInput(label='Name')
-            answer = ui.TextInput(label='Answer', style=discord.TextStyle.paragraph)
-
-            async def on_submit(self, interaction: discord.Interaction):
-                await interaction.response.send_message(f'Thanks for your response, {self.name}!', ephemeral=True)
-
-    Parameters
-    -----------
-    title: :class:`str`
-        The title of the modal. Can only be up to 45 characters.
-    timeout: Optional[:class:`float`]
-        Timeout in seconds from last interaction with the UI before no longer accepting input.
-        If ``None`` then there is no timeout.
-    custom_id: :class:`str`
-        The ID of the modal that gets received during an interaction.
-        If not given then one is generated for you.
-        Can only be up to 100 characters.
-
-    Attributes
-    ------------
-    title: :class:`str`
-        The title of the modal.
-    custom_id: :class:`str`
-        The ID of the modal that gets received during an interaction.
-
-    DOCSTRING WAS TAKEN FROM DISCORD.PY'S MODAL ON 1/19/2023
-    """
-
     async def _scheduled_task(
         self,
         interaction: Interaction,
@@ -181,22 +108,6 @@ class Modal(ui.Modal):
             # In the future, maybe this will require checking if we set an error response.
             self.stop()
 
+    @discord.utils.copy_doc(ui.Modal.on_error)
     async def on_error(self, interaction: Interaction, error: Exception, /) -> None:
-        """|coro|
-
-        A callback that is called when :meth:`on_submit`
-        fails with an error.
-
-        The default implementation logs to the library logger.
-
-        Parameters
-        -----------
-        interaction: :class:`~discord.Interaction`
-            The interaction that led to the failure.
-        error: :class:`Exception`
-            The exception that was raised.
-
-        DOCSTRING WAS TAKEN FROM DISCORD.PY'S MODAL ON 1/19/2023
-        """
-
         _client_log.error("Ignoring exception in modal %r:", self, exc_info=error)
