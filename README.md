@@ -1,4 +1,4 @@
-# dpy-utils
+# discord-ext-utils
 
 a collection of utils I use with discord.py
 
