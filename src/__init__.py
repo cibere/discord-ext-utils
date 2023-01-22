@@ -10,7 +10,9 @@ __version__ = "0.0.1a"
 from typing import Literal, NamedTuple
 
 from .abc import *
+from .bot import *
 from .converters import *
+from .utils import *
 
 
 class VersionInfo(NamedTuple):
