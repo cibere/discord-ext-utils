@@ -5,7 +5,7 @@ a collection of utils I use with discord.py
 """
 
 __description__ = "a collection of utils I use with discord.py"
-__version__ = "0.0.1a"
+__version__ = "0.0.1"
 
 from typing import Literal, NamedTuple
 
