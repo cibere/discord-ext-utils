@@ -50,7 +50,8 @@ class BaseConverter(
     ctx_or_interaction : commands.Context | Interaction
         the ctx or interaction the converter was invoked with
     arg : str
-        the raw arg"""
+        the raw arg
+    """
 
     async def handle(
         self, ctx_or_interaction: commands.Context | Interaction, arg: str

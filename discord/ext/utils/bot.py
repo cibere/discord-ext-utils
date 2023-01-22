@@ -27,6 +27,7 @@ from pkgutil import iter_modules
 from aiohttp import ClientSession
 from discord.utils import MISSING
 
+import discord
 from discord.ext import commands
 
 __all__ = ["Bot"]
@@ -37,10 +38,12 @@ class Bot(commands.Bot):
     """A subclass of `commands.Bot` which has stuff like
 
     a pre-populated session attribute
-    a `load_extensions` method which will either load all extensions in a given folder, or from a list of them"""
+    a `load_extensions` method which will either load all extensions in a given folder, or from a list of them
+    """
 
     session: ClientSession
 
+    @discord.utils.copy_doc(commands.Bot.start)
     async def start(
         self, token: str, *, reconnect: bool = True, **aiohttp_session_kwargs
     ) -> None:
