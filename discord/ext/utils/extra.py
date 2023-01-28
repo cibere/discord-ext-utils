@@ -67,8 +67,6 @@ async def send_message(
     files: Sequence[File] = MISSING,
     stickers: Sequence[Union[GuildSticker, StickerItem]] = MISSING,
     delete_after: float = MISSING,
-    nonce: Union[str, int] = MISSING,
-    allowed_mentions: AllowedMentions = MISSING,
     reference: Union[Message, MessageReference, PartialMessage] = MISSING,
     mention_author: bool = MISSING,
     view: View = MISSING,
@@ -93,7 +91,6 @@ async def send_message(
     stickers: Sequence[Union[GuildSticker, StickerItem]] = MISSING,
     delete_after: float = MISSING,
     nonce: Union[str, int] = MISSING,
-    allowed_mentions: AllowedMentions = MISSING,
     reference: Union[Message, MessageReference, PartialMessage] = MISSING,
     mention_author: bool = MISSING,
     view: View = MISSING,
@@ -118,7 +115,6 @@ async def send_message(
     stickers: Sequence[Union[GuildSticker, StickerItem]] = MISSING,
     delete_after: float = MISSING,
     nonce: Union[str, int] = MISSING,
-    allowed_mentions: AllowedMentions = MISSING,
     reference: Union[Message, MessageReference, PartialMessage] = MISSING,
     mention_author: bool = MISSING,
     view: View = MISSING,
@@ -143,7 +139,6 @@ async def send_message(
     stickers: Sequence[Union[GuildSticker, StickerItem]] = MISSING,
     delete_after: float = MISSING,
     nonce: Union[str, int] = MISSING,
-    allowed_mentions: AllowedMentions = MISSING,
     reference: Union[Message, MessageReference, PartialMessage] = MISSING,
     mention_author: bool = MISSING,
     view: View = MISSING,
@@ -170,7 +165,6 @@ async def send_message(
     stickers: Sequence[Union[GuildSticker, StickerItem]] = MISSING,
     delete_after: Optional[float] = None,
     nonce: Union[str, int] = MISSING,
-    allowed_mentions: AllowedMentions = MISSING,
     reference: Union[Message, MessageReference, PartialMessage] = MISSING,
     mention_author: bool = MISSING,
     view: View = MISSING,
@@ -197,7 +191,6 @@ async def send_message(
         "stickers": stickers,
         "delete_after": delete_after,
         "nonce": nonce,
-        "allow_mentions": allowed_mentions,
         "reference": reference,
         "mention_author": mention_author,
         "view": view,
@@ -207,11 +200,11 @@ async def send_message(
     }
 
     if isinstance(dest, commands.Context):
-        _pop(kwargs, ["allow_mentions", "supress_embeds", "wait"])
+        _pop(kwargs, ["supress_embeds", "wait"])
         switch_to_none(kwargs)
         return await dest.send(**kwargs)
     elif isinstance(dest, discord.abc.Messageable):
-        _pop(kwargs, ["allow_mentions", "supress_embeds", "wait", "ephemeral"])
+        _pop(kwargs, ["supress_embeds", "wait", "ephemeral"])
         switch_to_none(kwargs)
         return await dest.send(**kwargs)
 
@@ -224,7 +217,6 @@ async def send_message(
                 [
                     "stickers",
                     "nonce",
-                    "allow_mentions",
                     "reference",
                     "mention_author",
                     "supress_embeds",
@@ -239,7 +231,6 @@ async def send_message(
                 "stickers",
                 "delete_after",
                 "nonce",
-                "allow_mentions",
                 "reference",
                 "supress_embeds",
                 "mention_author",
