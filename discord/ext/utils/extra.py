@@ -194,7 +194,7 @@ async def send_message(
         "reference": reference,
         "mention_author": mention_author,
         "view": view,
-        "supress_embeds": suppress_embeds,
+        "suppress_embeds": suppress_embeds,
         "ephemeral": ephemeral,
         "wait": wait,
     }
